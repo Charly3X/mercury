@@ -22,7 +22,7 @@
     # get the selection and initialize its information into the form
     return unless Mercury.region && Mercury.region.selection
     selection = Mercury.region.selection()
-
+    console.log('selection')
     # if we're editing an image prefill the information
     if image = selection.is?('img')
       @element.find('#media_image_url').val(image.attr('src'))
@@ -32,6 +32,10 @@
       @element.find('#media_image_height').val(image.height() || '')
       @element.find('#media_image_alt').val(image.attr('alt') || '')
       @focus('#media_image_url')
+
+    if image = selection.is?('audio')
+      @element.find('#media_audio_url').val(image.attr('src'))
+      @focus('#media_audio_url')
 
     # if we're editing an iframe (assume it's a video for now)
     if iframe = selection.is?('iframe')
@@ -108,6 +112,11 @@
         attrs['style'] += 'height: ' + height + 'px;' if height = @element.find('#media_image_height').val()
         attrs['alt'] = alt if alt = @element.find('#media_image_alt').val()
         Mercury.trigger('action', {action: 'insertImage', value: attrs})
+
+      when 'audio_url'
+        url = @element.find('#media_audio_url').val()
+        value = '<audio controls=""><source src=' + url + '></audio>';
+        Mercury.trigger('action', {action: 'insertHTML', value: value})
 
       when 'youtube_url'
         url = @element.find('#media_youtube_url').val()

@@ -440,6 +440,8 @@ class @Mercury.Regions.Full extends Mercury.Region
 
     insertImage: (selection, options) -> @execCommand('insertHTML', {value: jQuery('<img/>', options.value)})
 
+    insertAudio: (selection, options) -> @execCommand('insertHTML', {value: jQuery('<audio/>', options.value)})
+
     insertTable: (selection, options) -> @execCommand('insertHTML', {value: options.value})
 
     insertLink: (selection, options) ->

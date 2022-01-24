@@ -10556,6 +10556,15 @@ Showdown.converter = function() {
             action: 'insertImage',
             value: attrs
           });
+	    case 'audio_url':
+			  url = this.element.find('#media_audio_url').val();
+			  value = jQuery('<source>', {
+				  src: url
+			  });
+			  return Mercury.trigger('action', {
+				  action: 'insertAudio',
+				  value: value
+			  });
         case 'youtube_url':
           url = this.element.find('#media_youtube_url').val();
           code = url.replace(/https?:\/\/youtu.be\//, '');

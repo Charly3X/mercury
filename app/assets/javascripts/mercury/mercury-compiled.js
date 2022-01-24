@@ -8511,6 +8511,12 @@ Showdown.converter = function() {
           value: jQuery('<img/>', options.value)
         });
       },
+   		insertAudio: function(selection, options) {
+		    console.log("asgasdfsdfasdfasfasdf");
+			return this.execCommand('insertHTML', {
+				value: jQuery('<audio/>', options.value)
+			});
+		},
       insertTable: function(selection, options) {
         return this.execCommand('insertHTML', {
           value: options.value
@@ -8893,7 +8899,10 @@ Showdown.converter = function() {
       },
       insertImage: function(options) {
         return this.updateSrc(options.value.src);
-      }
+      },
+		insertAudio: function(options) {
+			return this.updateSrc(options.value.src);
+		}
     };
 
     return Image;
@@ -9241,6 +9250,10 @@ Showdown.converter = function() {
       insertImage: function(selection, options) {
         return selection.replace('![add alt text](' + encodeURI(options.value.src) + ')', true);
       },
+		insertAudio: function(selection, options) {
+		    console.log("wergwergwergweg111");
+			return selection.replace('![add alt text](' + encodeURI(options.value.src) + ')', true);
+		},
       insertTable: function(selection, options) {
         return selection.replace(options.value.replace(/<br>|<br\/>/ig, ''), false, true);
       },
@@ -10539,6 +10552,7 @@ Showdown.converter = function() {
       }
     },
     submitForm: function() {
+		console.log('submit');
       var alignment, attrs, code, float, protocol, type, url, value;
       type = this.element.find('input[name=media_type]:checked').val();
       switch (type) {
@@ -10556,6 +10570,16 @@ Showdown.converter = function() {
             action: 'insertImage',
             value: attrs
           });
+	    case 'audio_url':
+		  console.log("ergwergwegweggg66666");
+		  url = this.element.find('#media_audio_url').val();
+		  value = jQuery('<source>', {
+			  src: url
+		  });
+		  return Mercury.trigger('action', {
+			  action: 'insertAudio',
+			  value: value
+		  });
         case 'youtube_url':
           url = this.element.find('#media_youtube_url').val();
           code = url.replace(/https?:\/\/youtu.be\//, '');
